@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: azure-agent-dind
+  IMAGE_NAME: parsa2820/azure-agent-dind
 
 jobs:
   build:
