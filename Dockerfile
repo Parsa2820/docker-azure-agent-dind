@@ -1,4 +1,5 @@
 FROM ubuntu:20.04
+ARG AGENT_VERSION=2.205.0
 RUN DEBIAN_FRONTEND=noninteractive apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 
@@ -32,12 +33,17 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommend
     docker-ce-cli \
     containerd.io
 
+# Download and extract Azure Pipelines agent
+WORKDIR /azp
+RUN curl -LsS "https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-x64-${AGENT_VERSION}.tar.gz" | tar -xz & wait $!
+
 # Can be 'linux-x64', 'linux-arm64', 'linux-arm', 'rhel.6-x64'.
 ENV TARGETARCH=linux-x64
 
 WORKDIR /azp
 
 COPY ./start.sh .
+RUN sed -i -e 's/\r$//' start.sh
 RUN chmod +x start.sh
 
 ENTRYPOINT [ "./start.sh" ]
