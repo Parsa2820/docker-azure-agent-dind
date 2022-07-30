@@ -2,13 +2,14 @@ name: Docker
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "release/offline-image" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "release/offline-image" ]
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: parsa2820/azure-agent-dind
+  IMAGE_NAME: parsa2820/azure-agent-dind-offline
+  AGENT_VERSION: 2.205.0
 
 jobs:
   build:
@@ -46,6 +47,7 @@ jobs:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.AGENT_VERSION }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: AGENT_VERSION=${{ env.AGENT_VERSION }}

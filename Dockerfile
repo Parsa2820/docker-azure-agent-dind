@@ -1,5 +1,5 @@
 FROM ubuntu:20.04
-ARG AGENT_VERSION=2.205.0
+ARG AGENT_VERSION
 RUN DEBIAN_FRONTEND=noninteractive apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 
