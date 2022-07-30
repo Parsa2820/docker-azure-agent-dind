@@ -12,3 +12,7 @@ image itself.
 ```bash
 docker run -e AZP_URL=<Azure DevOps instance> -e AZP_TOKEN=<PAT token> -e AZP_AGENT_NAME=<agnet name> -e AZP_POOL=<pool name> parsa2820/azure-agent-dind-offline:latest
 ```
+
+## Build
+```bash
+docker build --build-args AGENT_VERSION=<agent version> .
